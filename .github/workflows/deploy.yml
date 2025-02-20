@@ -1,0 +1,23 @@
+name: Azure Deployment
+
+on:  
+  push:  
+    branches:  
+      - main  # Change if using a different branch
+  workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Azure Resources
+        run: |
+          az deployment group create --resource-group RESOURCE-GROUP --template-file template.json --parameters parameters.json
