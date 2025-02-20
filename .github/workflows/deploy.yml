@@ -6,6 +6,9 @@ on:
       - main  # Change if using a different branch
   workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
 
+env:
+  RESOURCE_GROUP: "RESOURCE-GROUP"  # Make sure this matches your actual resource group name
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,4 +23,4 @@ jobs:
 
       - name: Deploy Azure Resources
         run: |
-          az deployment group create --resource-group RESOURCE-GROUP --template-file template.json --parameters parameters.json
+          az deployment group create --resource-group $RESOURCE_GROUP --template-file template.json --parameters parameters.json
